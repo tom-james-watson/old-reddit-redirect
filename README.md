@@ -1,6 +1,6 @@
 # Old Reddit Redirect
 
-Ensure Reddit always loads the old design
+Ensure Reddit always loads the old design (old.reddit.com)
 
 ## License
 

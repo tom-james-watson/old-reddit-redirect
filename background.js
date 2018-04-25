@@ -1,4 +1,4 @@
-const oldReddit = "http://old.reddit.com"
+const oldReddit = "https://old.reddit.com"
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {

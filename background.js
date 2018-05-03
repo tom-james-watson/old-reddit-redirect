@@ -8,7 +8,8 @@ chrome.webRequest.onBeforeRequest.addListener(
     urls: [
       "*://reddit.com/*",
       "*://www.reddit.com/*",
-      "*://np.reddit.com/*"
+      "*://np.reddit.com/*",
+      "*://new.reddit.com/*"
     ],
     types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
   },

@@ -9,7 +9,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       "*://reddit.com/*",
       "*://www.reddit.com/*",
       "*://np.reddit.com/*",
-      "*://new.reddit.com/*"
+      "*://new.reddit.com/*",
       "*://pay.reddit.com/*"
     ],
     types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]

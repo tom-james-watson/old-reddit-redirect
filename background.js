@@ -27,7 +27,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       var tail = "overview";
       if (pathname.lastIndexOf("/") != pathname.length - 1) tail = "/" + tail;
         
-      return {redirectUrl: details.url + tail};
+      return {redirectUrl: urlParser.origin + urlParser.pathname + tail + urlParser.search};
     }
   },
   {

@@ -16,3 +16,30 @@ chrome.webRequest.onBeforeRequest.addListener(
   },
   ["blocking"]
 )
+chrome.webRequest.onBeforeRequest.addListener(
+  function(details) {
+    var urlParser = document.createElement("a");
+    urlParser.href = details.url;
+    var pathname = urlParser.pathname;
+    
+    //redirect /user/* and /user/*/ to /user/*/overview
+    if (pathname.match(/\/user\/[\w-]+\/?$/)) {
+      var tail = "overview";
+      if (pathname.lastIndexOf("/") != pathname.length - 1) tail = "/" + tail;
+        
+      return {redirectUrl: details.url + tail};
+    }
+  },
+  {
+    urls: [
+      "*://reddit.com/user/*",
+      "*://old.reddit.com/user/*",
+      "*://www.reddit.com/user/*",
+      "*://np.reddit.com/user/*",
+      "*://new.reddit.com/user/*",
+      "*://pay.reddit.com/user/*"
+    ],
+    types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
+  },
+  ["blocking"]
+)

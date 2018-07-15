@@ -12,6 +12,7 @@
     "webRequest",
     "webRequestBlocking",
     "*://reddit.com/*",
+    "*://old.reddit.com/*",
     "*://www.reddit.com/*",
     "*://np.reddit.com/*",
     "*://new.reddit.com/*",

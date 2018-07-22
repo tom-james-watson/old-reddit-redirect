@@ -1,4 +1,5 @@
 const oldReddit = "https://old.reddit.com"
+const excludedSubdomains = ["blog.reddit.com", "oauth.reddit.com", "out.reddit.com"];
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
@@ -6,7 +7,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     urlParser.href = details.url;
     
     //redirect to old.reddit.com
-    if (urlParser.hostname != "old.reddit.com")
+    if (urlParser.hostname != "old.reddit.com" && excludedSubdomains.indexOf(urlParser.hostname) == -1)
       return {redirectUrl: oldReddit + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]};
     
     //redirect /user/* and /user/*/ to /user/*/overview

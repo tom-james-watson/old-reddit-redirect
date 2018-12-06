@@ -2,10 +2,9 @@ const oldReddit = "https://old.reddit.com"
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-
     // Exclude poll pages
-    if (details.url.match(/^https?:\/\/(www.)*reddit.com\/poll/)){
-      return 
+    if (details.url.match(/^https?:\/\/(www.)*reddit.com\/poll/)) {
+      return
     }
 
     return {redirectUrl: oldReddit + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]}

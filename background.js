@@ -41,6 +41,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 
 // Browser Action
+chrome.browserAction.setTitle({"title": "Old Reddit Redirect (Enabled)"});
 chrome.browserAction.onClicked.addListener(() => {
   disabled = !disabled;
 

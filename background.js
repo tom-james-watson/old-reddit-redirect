@@ -2,8 +2,8 @@ const oldReddit = "https://old.reddit.com";
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-    // Exclude poll pages
-    if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/poll/)) {
+    // Exclude poll and radio pages
+    if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/(poll|rpan)/)) {
       return;
     }
 

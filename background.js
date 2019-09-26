@@ -6,6 +6,11 @@ chrome.webRequest.onBeforeRequest.addListener(
     if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/poll/)) {
       return;
     }
+    
+    // Exclude rpan pages
+    if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/rpan/)) {
+      return;
+    }
 
     return {
       redirectUrl:

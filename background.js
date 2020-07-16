@@ -21,9 +21,9 @@ chrome.webRequest.onBeforeRequest.addListener(
     
     if (excludedSubdomains.indexOf(urlParser.hostname) != -1) return;
     
-    for (const path of excludedPaths)
-        if (urlParser.pathname.indexOf(path) == 0)
-            return;
+    for (const path of excludedPaths) {
+      if (urlParser.pathname.indexOf(path) == 0) return;
+    }
     
     return {redirectUrl: oldReddit + urlParser.pathname};
   },

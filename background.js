@@ -1,6 +1,16 @@
 const oldReddit = "https://old.reddit.com";
-const excludedSubdomains = ["blog.reddit.com", "oauth.reddit.com", "out.reddit.com"];
-const excludedPaths = ["/poll", "/gallery", "/rpan", "/settings"];
+const excludedSubdomains = [
+  "blog.reddit.com",
+  "mod.reddit.com",
+  "oauth.reddit.com",
+  "out.reddit.com"];
+const excludedPaths = [
+  "/chat",
+  "/gallery",
+  "/poll",
+  "/rpan",
+  "/settings",
+  "/topics"];
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {

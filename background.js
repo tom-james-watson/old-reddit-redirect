@@ -25,7 +25,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       if (urlParser.pathname.indexOf(path) == 0) return;
     }
     
-    return {redirectUrl: oldReddit + urlParser.pathname};
+    return {redirectUrl: oldReddit + urlParser.pathname + urlParser.search + urlParser.hash};
   },
   {
     urls: [

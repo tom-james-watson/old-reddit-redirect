@@ -1,7 +1,7 @@
 {
   "name": "Old Reddit Redirect",
   "description": "Ensure Reddit always loads the old design",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "manifest_version": 2,
   "background": {"scripts":["background.js"]},
   "icons": {

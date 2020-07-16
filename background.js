@@ -2,15 +2,12 @@ const oldReddit = "https://old.reddit.com";
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-    // Exclude poll pages
-    if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/poll/)) {
-      return;
-    }
-
-    return {
-      redirectUrl:
-        oldReddit + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]
-    };
+    let urlParser = document.createElement("a");
+    urlParser.href = details.url;
+    
+    if (urlParser.hostname == "old.reddit.com") return;
+    
+    return {redirectUrl: oldReddit + urlParser.pathname};
   },
   {
     urls: [

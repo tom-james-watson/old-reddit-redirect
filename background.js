@@ -14,7 +14,7 @@ const excludedPaths = [
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-    let urlParser = document.createElement("a");
+    const urlParser = document.createElement("a");
     urlParser.href = details.url;
     
     if (urlParser.hostname == "old.reddit.com") return;

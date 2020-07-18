@@ -8,16 +8,15 @@ const excludedPaths = [
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-    const urlParser = document.createElement("a");
-    urlParser.href = details.url;
+    const url = new URL(details.url);
     
-    if (urlParser.hostname == "old.reddit.com") return;
+    if (url.hostname === "old.reddit.com") return;
     
     for (const path of excludedPaths) {
-      if (urlParser.pathname.indexOf(path) == 0) return;
+      if (url.pathname.indexOf(path) === 0) return;
     }
     
-    return {redirectUrl: oldReddit + urlParser.pathname + urlParser.search + urlParser.hash};
+    return {redirectUrl: oldReddit + url.pathname + url.search + url.hash};
   },
   {
     urls: [

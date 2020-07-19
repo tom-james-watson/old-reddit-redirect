@@ -1,15 +1,29 @@
-const oldReddit = "https://old.reddit.com";
+const oldRedditHostname = "old.reddit.com"
+const oldReddit = "https://" + oldRedditHostname;
+const excludedPaths = [
+  "/gallery",
+  "/poll",
+  "/rpan",
+  "/settings",
+  "/topics"
+];
 
 chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
-    // Exclude poll pages
-    if (details.url.match(/^https?:\/\/(www\.)*reddit.com\/poll/)) {
+    const url = new URL(details.url);
+
+    if (url.hostname === oldRedditHostname) {
       return;
     }
 
+    for (const path of excludedPaths) {
+      if (url.pathname.startsWith(path)) {
+        return;
+      }
+    }
+
     return {
-      redirectUrl:
-        oldReddit + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]
+      redirectUrl: oldReddit + url.pathname + url.search + url.hash
     };
   },
   {

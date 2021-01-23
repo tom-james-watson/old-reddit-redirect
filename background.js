@@ -1,22 +1,17 @@
 const oldReddit = "https://old.reddit.com";
-const excludedPaths = [
-  "/gallery",
-  "/poll",
-  "/rpan",
-  "/settings",
-  "/topics"];
+const excludedPaths = ["/gallery", "/poll", "/rpan", "/settings", "/topics"];
 
 chrome.webRequest.onBeforeRequest.addListener(
-  function(details) {
+  function (details) {
     const url = new URL(details.url);
-    
+
     if (url.hostname === "old.reddit.com") return;
-    
+
     for (const path of excludedPaths) {
       if (url.pathname.indexOf(path) === 0) return;
     }
-    
-    return {redirectUrl: oldReddit + url.pathname + url.search + url.hash};
+
+    return { redirectUrl: oldReddit + url.pathname + url.search + url.hash };
   },
   {
     urls: [
@@ -34,8 +29,8 @@ chrome.webRequest.onBeforeRequest.addListener(
       "image",
       "object",
       "xmlhttprequest",
-      "other"
-    ]
+      "other",
+    ],
   },
   ["blocking"]
 );

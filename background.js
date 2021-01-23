@@ -18,7 +18,6 @@ chrome.webRequest.onBeforeRequest.addListener(
       "*://reddit.com/*",
       "*://www.reddit.com/*",
       "*://np.reddit.com/*",
-      "*://new.reddit.com/*",
       "*://amp.reddit.com/*",
     ],
     types: [

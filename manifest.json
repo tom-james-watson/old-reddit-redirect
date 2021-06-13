@@ -8,6 +8,11 @@
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
+  "content_scripts": [{
+    "matches": [ "*://old.reddit.com/*" ],
+    "css": [ "styles.css" ],
+    "run_at": "document_start"
+  }],
   "permissions": [
     "webRequest",
     "webRequestBlocking",

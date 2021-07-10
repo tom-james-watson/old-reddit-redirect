@@ -1,5 +1,5 @@
 const oldReddit = "https://old.reddit.com";
-const excludedPaths = ["/gallery", "/poll", "/rpan", "/settings", "/topics"];
+const excludedPaths = ["/gallery", "/poll", "/rpan", "/settings", "/topics", "/community-points"];
 
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {

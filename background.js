@@ -1,4 +1,5 @@
 const oldReddit = "https://old.reddit.com";
+const newReddit = "https://new.reddit.com";
 const excludedPaths = [
   "/poll",
   "/rpan",
@@ -10,6 +11,10 @@ const excludedPaths = [
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     const url = new URL(details.url);
+
+    if (url.pathname === "/r/place/" && url.search.indexOf("cx=") !== -1) {
+      return { redirectUrl: newReddit + url.pathname + url.search + url.hash };
+    }
 
     if (url.hostname === "old.reddit.com") return;
 

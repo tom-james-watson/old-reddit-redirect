@@ -8,6 +8,12 @@ Dislike Reddit's redesign? Old Reddit Redirect will ensure that you always load 
 
 Will force all reddit.com usage to old.reddit.com. Will work when navigating to the site, opening links, using old bookmarks. Works regardless of whether you are logged in or not, and in incognito mode.
 
+Also has a new minor fixes and quality of life improvements like:
+
+- Removing the undismissable cookie banner
+- Preventing reddit from rendering raw image URLs as HTML
+- Rewriting links to galleries to the raw old reddit comments page
+
 #### Redirected domains
 
 - `reddit.com`

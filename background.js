@@ -48,19 +48,20 @@ chrome.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
+// Prevent reddit from rendering raw image URLs as HTML
 chrome.webRequest.onBeforeSendHeaders.addListener(
   function (details) {
     const url = new URL(details.url);
 
     if (url.hostname === "i.redd.it") {
-      const headers = details.requestHeaders.filter(h => h.name.toLowerCase() !== "accept");
+      const headers = details.requestHeaders.filter(
+        (h) => h.name.toLowerCase() !== "accept"
+      );
       return { requestHeaders: headers };
     }
   },
   {
-    urls: [
-      "*://i.redd.it/*",
-    ],
+    urls: ["*://i.redd.it/*"],
     types: [
       "main_frame",
       "sub_frame",
@@ -72,8 +73,5 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       "other",
     ],
   },
-  [
-    "blocking",
-    "requestHeaders",
-  ]
+  ["blocking", "requestHeaders"]
 );

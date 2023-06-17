@@ -18,7 +18,10 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
 
     if (url.pathname.indexOf("/gallery") === 0) {
-      return { redirectUrl: oldReddit + '/comments' + url.pathname.slice("/gallery".length) };
+      return {
+        redirectUrl:
+          oldReddit + "/comments" + url.pathname.slice("/gallery".length),
+      };
     }
 
     return { redirectUrl: oldReddit + url.pathname + url.search + url.hash };

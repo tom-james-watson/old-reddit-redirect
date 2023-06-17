@@ -3,15 +3,23 @@
   "description": "Ensure Reddit always loads the old design",
   "version": "1.6.1",
   "manifest_version": 2,
-  "background": { "scripts": ["background.js"] },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
   "icons": {
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
   "content_scripts": [
     {
-      "matches": ["*://old.reddit.com/*"],
-      "css": ["styles.css"],
+      "matches": [
+        "*://old.reddit.com/*"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_start"
     }
   ],
@@ -22,6 +30,6 @@
     "*://www.reddit.com/*",
     "*://np.reddit.com/*",
     "*://amp.reddit.com/*",
-    "*://i.reddit.com/*"
+    "*://i.reddit.com/*""*://preview.redd.it./*"
   ]
 }

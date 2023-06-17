@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "https?://www.reddit.com/poll",
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "scheme": "https",
+          "host": "old.reddit.com"
+        }
+      }
+    },
+    "condition": {
+      "regexFilter": "https?://www.reddit.com/*",
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  }
+]

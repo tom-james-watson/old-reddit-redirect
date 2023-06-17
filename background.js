@@ -47,3 +47,33 @@ chrome.webRequest.onBeforeRequest.addListener(
   },
   ["blocking"]
 );
+
+chrome.webRequest.onBeforeSendHeaders.addListener(
+  function (details) {
+    const url = new URL(details.url);
+
+    if (url.hostname === "i.redd.it") {
+      const headers = details.requestHeaders.filter(h => h.name.toLowerCase() !== "accept");
+      return { requestHeaders: headers };
+    }
+  },
+  {
+    urls: [
+      "*://i.redd.it/*",
+    ],
+    types: [
+      "main_frame",
+      "sub_frame",
+      "stylesheet",
+      "script",
+      "image",
+      "object",
+      "xmlhttprequest",
+      "other",
+    ],
+  },
+  [
+    "blocking",
+    "requestHeaders",
+  ]
+);

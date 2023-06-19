@@ -6,6 +6,9 @@ const excludedPaths = [
   "/topics",
   "/community-points",
 ];
+const excludedPatterns = [
+  "^/user/[A-Za-z0-9_-]+/draft/",
+];
 
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
@@ -15,6 +18,10 @@ chrome.webRequest.onBeforeRequest.addListener(
 
     for (const path of excludedPaths) {
       if (url.pathname.indexOf(path) === 0) return;
+    }
+
+    for (const pattern of excludedPatterns) {
+      if (url.pathname.search(pattern) !== -1) return;
     }
 
     if (url.pathname.indexOf("/gallery") === 0) {

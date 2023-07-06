@@ -53,15 +53,22 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   function (details) {
     const url = new URL(details.url);
 
-    if (url.hostname === "i.redd.it") {
-      const headers = details.requestHeaders.filter(
-        (h) => h.name.toLowerCase() !== "accept"
-      );
-      return { requestHeaders: headers };
+    const imageUrlHostnames = [
+      "preview.redd.it",
+      "i.redd.it",
+    ]
+
+    for (const hostname of imageUrlHostnames) {
+      if (url.hostname === hostname) {
+        const headers = details.requestHeaders.filter(
+          (h) => h.name.toLowerCase() !== "accept"
+        );
+        return { requestHeaders: headers };
+      }
     }
   },
   {
-    urls: ["*://i.redd.it/*"],
+    urls: ["*://i.redd.it/*", "*://preview.redd.it/*"],
     types: [
       "main_frame",
       "sub_frame",

@@ -25,6 +25,7 @@
     "*://np.reddit.com/*",
     "*://amp.reddit.com/*",
     "*://i.reddit.com/*",
-    "*://i.redd.it/*"
+    "*://i.redd.it/*",
+    "*://preview.redd.it/*"
   ]
 }

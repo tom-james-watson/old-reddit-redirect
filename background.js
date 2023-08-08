@@ -1,5 +1,6 @@
 const oldReddit = "https://old.reddit.com";
 const excludedPaths = [
+  "/media",
   "/poll",
   "/rpan",
   "/settings",
@@ -45,7 +46,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       "other",
     ],
   },
-  ["blocking"]
+  ["blocking"],
 );
 
 // Prevent reddit from rendering raw image URLs as HTML
@@ -53,15 +54,12 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   function (details) {
     const url = new URL(details.url);
 
-    const imageUrlHostnames = [
-      "preview.redd.it",
-      "i.redd.it",
-    ]
+    const imageUrlHostnames = ["preview.redd.it", "i.redd.it"];
 
     for (const hostname of imageUrlHostnames) {
       if (url.hostname === hostname) {
         const headers = details.requestHeaders.filter(
-          (h) => h.name.toLowerCase() !== "accept"
+          (h) => h.name.toLowerCase() !== "accept",
         );
         return { requestHeaders: headers };
       }
@@ -80,5 +78,5 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       "other",
     ],
   },
-  ["blocking", "requestHeaders"]
+  ["blocking", "requestHeaders"],
 );

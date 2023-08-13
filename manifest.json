@@ -1,10 +1,12 @@
 {
   "name": "Old Reddit Redirect",
   "description": "Ensure Reddit always loads the old design",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "icons": {
     "48": "img/icon48.png",
@@ -12,8 +14,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://old.reddit.com/*"],
-      "css": ["styles.css"],
+      "matches": [
+        "*://old.reddit.com/*"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_start"
     }
   ],

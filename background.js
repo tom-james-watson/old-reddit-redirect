@@ -1,11 +1,12 @@
 const oldReddit = "https://old.reddit.com";
 const excludedPaths = [
-  "/media",
-  "/poll",
-  "/rpan",
-  "/settings",
-  "/topics",
-  "/community-points",
+  /^\/media/,
+  /^\/poll/,
+  /^\/rpan/,
+  /^\/settings/,
+  /^\/topics/,
+  /^\/community-points/,
+  /^\/r\/[a-zA-Z0-9_]+\/s\/.*/, // eg https://reddit.com/r/comics/s/TjDGhcl22d
 ];
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -15,7 +16,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     if (url.hostname === "old.reddit.com") return;
 
     for (const path of excludedPaths) {
-      if (url.pathname.indexOf(path) === 0) return;
+      if (path.test(url.pathname)) return;
     }
 
     if (url.pathname.indexOf("/gallery") === 0) {

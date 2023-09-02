@@ -18,6 +18,7 @@ Also has a new minor fixes and quality of life improvements like:
 - `reddit.com`
 - `www.reddit.com`
 - `np.reddit.com`
+- `sh.reddit.com`
 - `amp.reddit.com`
 - `i.reddit.com`
 

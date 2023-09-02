@@ -33,6 +33,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       "*://reddit.com/*",
       "*://www.reddit.com/*",
       "*://np.reddit.com/*",
+      "*://sh.reddit.com/*",
       "*://amp.reddit.com/*",
       "*://i.reddit.com/*",
     ],

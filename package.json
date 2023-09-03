@@ -1,0 +1,23 @@
+{
+  "name": "old-reddit-redirect",
+  "version": "1.0.0",
+  "description": "[Chrome extension](https://chrome.google.com/webstore/detail/old-reddit-redirect/dneaehbmnbhcippjikoajpoabadpodje)",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom-james-watson/old-reddit-redirect.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tom-james-watson/old-reddit-redirect/issues"
+  },
+  "homepage": "https://github.com/tom-james-watson/old-reddit-redirect#readme",
+  "devDependencies": {
+    "web-ext": "^7.6.2"
+  }
+}

@@ -25,6 +25,14 @@ Also has a new minor fixes and quality of life improvements like:
 
 - `new.reddit.com`
 
+
+## Development
+
+Ensure you have [`node`](https://nodejs.org/en) installed. Then run `make run` to start the live-reloading development server. This will open a browser window with the extension installed for testing.
+
+Once you've verified things are working correctly locally you can fork this repo and submit a pull request with your changes.
+
+
 ## License
 
 Code copyright Tom Watson. Code released under [the MIT license](LICENSE.txt).

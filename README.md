@@ -28,9 +28,9 @@ Also has a new minor fixes and quality of life improvements like:
 
 ## Contributing
 
-Install `web-ext` by running `npm install`. Then run `make run` which will
-trigger `web-ext` to start a live-reloading development server and launch the
-extension in a browser window for testing.
+Ensure you have `node` and `npm` installed. Then run `make run` to start the
+live-reloading development server. This will open a browser window with the
+extension installed for testing.
 
 Once you've verified things are working correctly locally you can fork this repo
 and submit a pull request with your changes.

@@ -1,3 +1,5 @@
+enableRedirect = true
+const toggleRedirectId = "toggle-reddit-redirect"
 const oldReddit = "https://old.reddit.com";
 const excludedPaths = [
   /^\/media/,
@@ -10,12 +12,28 @@ const excludedPaths = [
   /^\/appeals?/,
   /\/r\/.*\/s\//,
 ];
+const toggleRedirectData = {
+  true: {
+    "title": "Redirect enabled",
+    "icons": {
+      48: "img/icon48.png",
+      128: "img/icon128.png"
+    }
+  },
+  false: {
+    "title": "Redirect disabled",
+    "icons": {
+      48: "img/icon48-off.png",
+      128: "img/icon128-off.png"
+    }
+  }
+}
 
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     const url = new URL(details.url);
 
-    if (url.hostname === "old.reddit.com") return;
+    if (url.hostname === "old.reddit.com" || !enableRedirect) return;
 
     for (const path of excludedPaths) {
       if (path.test(url.pathname)) return;
@@ -83,3 +101,23 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   },
   ["blocking", "requestHeaders"],
 );
+
+chrome.contextMenus.create({
+  id: toggleRedirectId,
+  title: "toggle-redirect",
+  contexts: ["action"]
+}, () => chrome.runtime.lastError);
+
+function updateRedirect(value){
+  data = toggleRedirectData[value]
+  chrome.contextMenus.update(toggleRedirectId, {title: data["title"]});
+  chrome.browserAction.setIcon({path: data["icons"]});
+}
+updateRedirect(enableRedirect);
+
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+  if (info.menuItemId === toggleRedirectId) {
+    enableRedirect = !enableRedirect;
+    updateRedirect(enableRedirect);
+  }
+})

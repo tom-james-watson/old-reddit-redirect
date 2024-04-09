@@ -109,8 +109,15 @@ chrome.contextMenus.create({
 function updateStyleRedirect(value){
   chrome.contextMenus.update(styleRedirectId, {title: styleRedirectData[value]["title"]});
 }
-updateStyleRedirect(styleRedirect);
 
+chrome.storage.local.get("styleRedirect", function(items){
+    value = items["styleRedirect"];
+    if (value != undefined) {
+      styleRedirect = value;
+    }
+    updateStyleRedirect(styleRedirect)
+  });
+  
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId === styleRedirectId) {
     if (styleRedirect == "old") {
@@ -119,5 +126,6 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
         styleRedirect = "old";
     }
     updateStyleRedirect(styleRedirect);
+    chrome.storage.local.set({"styleRedirect": styleRedirect}, function(){});
   }
 })

@@ -27,6 +27,7 @@
     "webRequest",
     "webRequestBlocking",
     "contextMenus",
+    "storage",
     "*://reddit.com/*",
     "*://www.reddit.com/*",
     "*://np.reddit.com/*",

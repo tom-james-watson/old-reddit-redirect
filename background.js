@@ -12,7 +12,24 @@ const styleRedirectData = {
         "hostname": "new.reddit.com"
     }
 }
-
+enableRedirect = true
+const enableRedirectId = "enable-reddit-redirect"
+const enableRedirectData = {
+  true: {
+    "title": "Redirect enabled",
+    "icons": {
+      48: "img/icon48.png",
+      128: "img/icon128.png"
+    }
+  },
+  false: {
+    "title": "Redirect disabled",
+    "icons": {
+      48: "img/icon48-off.png",
+      128: "img/icon128-off.png"
+    }
+  }
+}
 const excludedPaths = [
   /^\/media/,
   /^\/poll/,
@@ -31,7 +48,7 @@ chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     const url = new URL(details.url);
 
-    if (url.hostname === styleRedirectData[styleRedirect]["hostname"]) return;
+    if (url.hostname === styleRedirectData[styleRedirect]["hostname"] || !enableRedirect) return;
 
     for (const path of excludedPaths) {
       if (path.test(url.pathname)) return;
@@ -127,5 +144,24 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     }
     updateStyleRedirect(styleRedirect);
     chrome.storage.local.set({"styleRedirect": styleRedirect}, function(){});
+  }
+})
+
+chrome.contextMenus.create({
+  id: enableRedirectId,
+  title: "enable-redirect",
+  contexts: ["action"]
+}, () => chrome.runtime.lastError);
+
+function updateEnableRedirect(value){
+  chrome.contextMenus.update(enableRedirectId, {title: enableRedirectData[value]["title"]});
+  chrome.browserAction.setIcon({path: enableRedirectData[value]["icons"]});
+}
+updateEnableRedirect(enableRedirect);
+
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+  if (info.menuItemId === enableRedirectId) {
+    enableRedirect = !enableRedirect;
+    updateEnableRedirect(enableRedirect);
   }
 })

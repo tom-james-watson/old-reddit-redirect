@@ -26,6 +26,7 @@
   "permissions": [
     "webRequest",
     "webRequestBlocking",
+    "contextMenus",
     "*://reddit.com/*",
     "*://www.reddit.com/*",
     "*://np.reddit.com/*",

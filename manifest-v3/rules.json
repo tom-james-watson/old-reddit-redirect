@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "priority": 2,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://\\w*\\.?reddit\\.com/(media|poll|settings|topics|community-points|appeals?|r/[a-zA-Z0-9_]+/s/).*",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 2,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [{ "header": "Accept", "operation": "remove" }]
+    },
+    "condition": {
+      "regexFilter": "^https://(i|preview).redd.it/*",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://old.reddit.com/comments/\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https://\\w*\\.reddit\\.com/gallery/(.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 4,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||www.reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
+  },
+  {
+    "id": 6,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||np.reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||amp.reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||i.reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
+  }
+]

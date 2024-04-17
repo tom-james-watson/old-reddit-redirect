@@ -28,6 +28,11 @@ Also has a new minor fixes and quality of life improvements like:
 
 ## Development
 
+> [!NOTE]  
+> There are currently two separate versions of this extension - manifest V2 and manifest V3.
+> Chrome is phasing out manifest V2, so we're forced to migrate to to avoid the extension getting removed. However, the V3 version currently doesn't seem compatible with Firefox, so V2 will be hanging around for a while.
+> TL;DR: Chrome = V3, Firefox = V2
+
 Ensure you have [`node`](https://nodejs.org/en) installed. Then run `make run` to start the live-reloading development server. This will open a browser window with the extension installed for testing.
 
 Once you've verified things are working correctly locally you can fork this repo and submit a pull request with your changes.

@@ -1,0 +1,35 @@
+{
+  "name": "Old Reddit Redirect",
+  "description": "Ensure Reddit always loads the old design",
+  "version": "2.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://old.reddit.com/*"],
+      "css": ["styles.css"]
+    }
+  ],
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions": [
+    "*://reddit.com/*",
+    "*://www.reddit.com/*",
+    "*://np.reddit.com/*",
+    "*://amp.reddit.com/*",
+    "*://i.reddit.com/*",
+    "*://i.redd.it/*",
+    "*://preview.redd.it/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

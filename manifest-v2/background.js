@@ -21,9 +21,10 @@ chrome.webRequest.onBeforeRequest.addListener(
       if (path.test(url.pathname)) return;
     }
 
-    if (url.pathname.indexOf("/gallery") === 0) {
+    if (url.pathname.startsWith("/gallery")) {
       return {
         redirectUrl:
+          // `slice`/`substring` is faster than `replace`
           oldReddit + "/comments" + url.pathname.slice("/gallery".length),
       };
     }

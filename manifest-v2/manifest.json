@@ -1,12 +1,16 @@
 {
   "name": "Old Reddit Redirect",
   "description": "Ensure Reddit always loads the old design",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko_android": {},
+    "gecko": {
+      "id": "{9063c2e9-e07c-4c2c-9646-cfe7ca8d0498}"
+    }
+  },
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "icons": {
     "48": "img/icon48.png",
@@ -14,12 +18,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://old.reddit.com/*"
-      ],
-      "css": [
-        "styles.css"
-      ],
+      "matches": ["*://old.reddit.com/*"],
+      "css": ["styles.css"],
       "run_at": "document_start"
     }
   ],

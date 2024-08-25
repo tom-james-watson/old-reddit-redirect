@@ -1,6 +1,7 @@
 const oldReddit = "https://old.reddit.com";
 const excludedPaths = [
   /^\/media/,
+  /^\/mod/,
   /^\/poll/,
   /^\/rpan/,
   /^\/settings/,

@@ -1,2 +1,3 @@
-_metadata
+*.swp
 *.zip
+.DS_Store

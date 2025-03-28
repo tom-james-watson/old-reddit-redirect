@@ -6,7 +6,7 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://\\w*\\.?reddit\\.com/(media|mod|poll|settings|topics|community-points|appeals?|r/[a-zA-Z0-9_]+/s/).*",
+      "regexFilter": "^https://\\w*\\.?reddit\\.com/(media|mod|poll|settings|topics|community-points|appeals?|notifications|r/[a-zA-Z0-9_]+/s/).*",
       "resourceTypes": ["main_frame"]
     }
   },

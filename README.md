@@ -1,7 +1,7 @@
 # Old Reddit Redirect
 
 > [!NOTE]  
-> If you're wondering why the chrome extension recently requested new permissions, please see https://github.com/tom-james-watson/old-reddit-redirect/issues/117
+> If you're wondering why the extension recently requested new permissions, please see https://github.com/tom-james-watson/old-reddit-redirect/issues/117
 
 [Chrome extension](https://chrome.google.com/webstore/detail/old-reddit-redirect/dneaehbmnbhcippjikoajpoabadpodje)
 

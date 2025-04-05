@@ -1,12 +1,13 @@
 {
   "name": "Old Reddit Redirect",
   "description": "Ensure Reddit always loads the old design",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "manifest_version": 3,
   "browser_specific_settings": {
     "gecko_android": {},
     "gecko": {
-      "id": "{9063c2e9-e07c-4c2c-9646-cfe7ca8d0498}"
+      "id": "{9063c2e9-e07c-4c2c-9646-cfe7ca8d0498}",
+      "strict_min_version": "130.0"
     }
   },
   "icons": {

@@ -28,7 +28,6 @@ Also has a new minor fixes and quality of life improvements like:
 
 #### Whitelisted domains
 
-- `new.reddit.com`
 - `sh.reddit.com`
 
 ## Development

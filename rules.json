@@ -115,5 +115,21 @@
         }
       }
     }
+  },
+  {
+    "id": 9,
+    "priority": 1,
+    "condition": {
+      "urlFilter": "||dr.reddit.com/*",
+      "resourceTypes": ["main_frame"]
+    },
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "old.reddit.com"
+        }
+      }
+    }
   }
 ]

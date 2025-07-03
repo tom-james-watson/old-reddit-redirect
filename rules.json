@@ -6,12 +6,23 @@
       "type": "allow"
     },
     "condition": {
-      "regexFilter": "^https://\\w*\\.?reddit\\.com/(media|mod|poll|settings|topics|community-points|appeals?|notifications|message/compose/|r/[a-zA-Z0-9_]+/s/).*",
+      "regexFilter": "^https://\\w*\\.?reddit\\.com/(media|mod|poll|settings|topics|community-points|appeals?).*",
       "resourceTypes": ["main_frame"]
     }
   },
   {
     "id": 2,
+    "priority": 2,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "regexFilter": "^https://\\w*\\.?reddit\\.com/(notifications|message/compose/|r/[a-zA-Z0-9_]+/s/).*",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 3,
     "priority": 2,
     "action": {
       "type": "modifyHeaders",
@@ -23,7 +34,7 @@
     }
   },
   {
-    "id": 3,
+    "id": 4,
     "priority": 2,
     "action": {
       "type": "redirect",
@@ -37,7 +48,7 @@
     }
   },
   {
-    "id": 4,
+    "id": 5,
     "priority": 1,
     "condition": {
       "urlFilter": "||reddit.com/*",
@@ -53,7 +64,7 @@
     }
   },
   {
-    "id": 5,
+    "id": 6,
     "priority": 1,
     "condition": {
       "urlFilter": "||www.reddit.com/*",
@@ -69,7 +80,7 @@
     }
   },
   {
-    "id": 6,
+    "id": 7,
     "priority": 1,
     "condition": {
       "urlFilter": "||np.reddit.com/*",
@@ -85,7 +96,7 @@
     }
   },
   {
-    "id": 7,
+    "id": 8,
     "priority": 1,
     "condition": {
       "urlFilter": "||amp.reddit.com/*",
@@ -101,7 +112,7 @@
     }
   },
   {
-    "id": 8,
+    "id": 9,
     "priority": 1,
     "condition": {
       "urlFilter": "||i.reddit.com/*",

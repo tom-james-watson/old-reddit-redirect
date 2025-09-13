@@ -126,5 +126,19 @@
         }
       }
     }
+  },
+  {
+    "id": 10,
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://old.reddit.com/comments/\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https://\\w*\\.reddit\\.com/videos/(.*)",
+      "resourceTypes": ["main_frame"]
+    }
   }
 ]

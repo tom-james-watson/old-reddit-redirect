@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "priority": 2,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "Accept",
+          "operation": "remove"
+        }
+      ]
+    },
+    "condition": {
+      "regexFilter": "^https://(i|preview).redd.it/*",
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  }
+]

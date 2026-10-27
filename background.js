@@ -1,19 +1,7 @@
 const api = globalThis.browser ?? globalThis.chrome;
 
-const cookie = {
-    url: "https://www.reddit.com/",
-    name: "redesign_optout",
-    value: "true",
-    domain: ".reddit.com",
-    path: "/",
-    secure: true,
-    sameSite: "lax",
-};
-
 const rulesetId = "ruleset_1";
-const twoYearsInSeconds = 63072000;
-
-const needsAccessBadge = "!";
+const newRulesetId = "new_reddit";
 
 const icons = (state) => ({
     16: `img/icon16${state}.png`,
@@ -29,67 +17,32 @@ const isEnabled = async () => {
     return rulesets.includes(rulesetId);
 };
 
-// Firefox treats host permissions as optional, and silently withholds any
-// added by an update (bug 1893232).
-const hasAccess = async () => {
-    try {
-        return await api.permissions.contains({
-            origins: api.runtime.getManifest().host_permissions,
-        });
-    } catch (e) {
-        return true;
-    }
-};
-
-const openWelcome = () =>
-    api.tabs.create({ url: api.runtime.getURL("welcome.html") });
-
-// Private windows and Firefox containers have their own cookie stores.
-const cookieStoreIds = async () => {
-    try {
-        const stores = await api.cookies.getAllCookieStores();
-        return stores.map((store) => store.id);
-    } catch (e) {
-        console.warn("failed to get cookie stores", e);
-        return [undefined];
-    }
-};
-
-const withStore = (details, storeId) =>
-    storeId ? { ...details, storeId } : details;
-
-// Reddit serves old reddit on www.reddit.com to anyone opted out of the
-// redesign. This cookie is how the extension works.
-const setOptOutCookieInStore = async (storeId) => {
-    const expirationDate = Math.floor(Date.now() / 1000) + twoYearsInSeconds;
-
-    try {
-        await api.cookies.set(
-            withStore({ ...cookie, expirationDate }, storeId),
-        );
-        return true;
-    } catch (e) {
-        console.warn("failed to set opt-out cookie", e);
-        return false;
-    }
-};
-
-const setOptOutCookie = async () => {
-    for (const storeId of await cookieStoreIds()) {
-        await setOptOutCookieInStore(storeId);
-    }
-};
-
-const removeOptOutCookie = async () => {
-    for (const storeId of await cookieStoreIds()) {
+// One-time migration from 3.0.x. Keep cookie permission for this cleanup;
+// normal operation no longer reads, sets, or restores cookies.
+const removeLegacyOptOutCookie = async () => {
+    for (const { id: storeId } of await api.cookies.getAllCookieStores()) {
         try {
-            await api.cookies.remove(
-                withStore({ url: cookie.url, name: cookie.name }, storeId),
-            );
+            const details = {
+                url: "https://www.reddit.com/",
+                name: "redesign_optout",
+                storeId,
+            };
+            const cookie = await api.cookies.get(details);
+            if (cookie?.value === "true" && cookie.domain === ".reddit.com") {
+                await api.cookies.remove(details);
+            }
         } catch (e) {
-            console.warn("failed to remove opt-out cookie", e);
+            console.warn("failed to remove legacy opt-out cookie", e);
         }
     }
+};
+
+const setMode = async (enabled) => {
+    await api.declarativeNetRequest.updateEnabledRulesets({
+        enableRulesetIds: [enabled ? rulesetId : newRulesetId],
+        disableRulesetIds: [enabled ? newRulesetId : rulesetId],
+    });
+    await api.storage.local.set({ oldReddit: enabled });
 };
 
 const showState = async (enabled) => {
@@ -101,21 +54,11 @@ const showState = async (enabled) => {
 };
 
 const sync = async () => {
-    const enabled = await isEnabled();
-
-    // Missing old.reddit.com costs us that redirect, but not the cookie.
-    if (enabled) {
-        await setOptOutCookie();
-    }
-
+    const { oldReddit: enabled = true } =
+        await api.storage.local.get("oldReddit");
+    // Static ruleset state resets on extension updates. Restore our saved mode.
+    await setMode(enabled);
     await showState(enabled);
-
-    if (!(await hasAccess())) {
-        await api.action.setBadgeText({ text: needsAccessBadge });
-        await api.action.setTitle({
-            title: "Grant missing permissions",
-        });
-    }
 };
 
 const isRedditTab = (tab) => {
@@ -125,115 +68,50 @@ const isRedditTab = (tab) => {
 
     try {
         const { hostname } = new URL(tab.url);
-        return hostname === "reddit.com" || hostname.endsWith(".reddit.com");
+        return [
+            "reddit.com",
+            "www.reddit.com",
+            "old.reddit.com",
+            "new.reddit.com",
+            "sh.reddit.com",
+            "np.reddit.com",
+            "m.reddit.com",
+            "amp.reddit.com",
+            "i.reddit.com",
+        ].includes(hostname);
     } catch (e) {
         console.error("failed to process tab url", e);
         return false;
     }
 };
 
-api.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (
-        changeInfo.status !== "loading" ||
-        !isRedditTab(tab) ||
-        !(await hasAccess()) ||
-        !(await isEnabled())
-    ) {
-        return;
-    }
-
-    try {
-        const store = withStore(
-            { url: cookie.url, name: cookie.name },
-            tab.cookieStoreId,
-        );
-        const current = await api.cookies.get(store);
-        if (current?.value === cookie.value) {
-            return;
-        }
-
-        if (await setOptOutCookieInStore(tab.cookieStoreId)) {
-            await api.tabs.reload(tabId);
-        }
-    } catch (e) {
-        console.warn("failed to restore opt-out cookie for tab", e);
-    }
-});
-
 api.action.onClicked.addListener(async (tab) => {
-    // Permission prompts need a click on a page, not on the toolbar.
-    if (!(await hasAccess())) {
-        await openWelcome();
-        return;
-    }
-
     const enabled = await isEnabled();
 
-    await api.declarativeNetRequest.updateEnabledRulesets(
-        enabled
-            ? { disableRulesetIds: [rulesetId] }
-            : { enableRulesetIds: [rulesetId] },
-    );
-
-    if (enabled) {
-        await removeOptOutCookie();
-    } else {
-        await setOptOutCookie();
-    }
-
+    await setMode(!enabled);
     await showState(!enabled);
 
     if (isRedditTab(tab)) {
         try {
             await api.tabs.reload(tab.id);
         } catch (e) {
-            console.warn("failed to reload tab", e);
+            console.warn("failed to switch Reddit tab", e);
         }
     }
 });
 
-api.runtime.onInstalled.addListener(async () => {
-    await sync();
-
-    // Firefox doesn't prompt for permissions added by an update, so we ask.
-    if (!(await hasAccess())) {
-        await openWelcome();
+api.runtime.onInstalled.addListener(async (details) => {
+    if (
+        details.reason === "update" &&
+        details.previousVersion?.startsWith("3.0.")
+    ) {
+        try {
+            await removeLegacyOptOutCookie();
+        } catch (e) {
+            console.warn("failed to clean up legacy opt-out cookies", e);
+        }
     }
+    await sync();
 });
 
 api.runtime.onStartup.addListener(sync);
-
-// A private window's cookie store doesn't exist until the window does.
-api.windows?.onCreated?.addListener(async (window) => {
-    if (window.incognito && (await isEnabled())) {
-        await setOptOutCookie();
-    }
-});
-
-api.permissions?.onAdded?.addListener(sync);
-
-// Reddit clears the cookie when you click "visit new reddit", and cookie
-// wipes take it too. Put it back, unless we're switched off.
-api.cookies.onChanged.addListener(
-    async ({ cookie: changed, removed, cause }) => {
-        if (changed.name !== cookie.name) {
-            return;
-        }
-
-        // Replacing a cookie fires a removal first. Reacting to that would
-        // mean answering our own writes with more writes, forever.
-        if (cause === "overwrite") {
-            return;
-        }
-
-        if (!removed && changed.value === cookie.value) {
-            return;
-        }
-
-        if (!(await isEnabled())) {
-            return;
-        }
-
-        await setOptOutCookie();
-    },
-);

@@ -1,7 +1,7 @@
 {
   "name": "Old Reddit Redirect",
   "description": "Ensure Reddit always loads the old design",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "manifest_version": 3,
   "browser_specific_settings": {
     "gecko_android": {},
@@ -49,6 +49,7 @@
     }
   ],
   "permissions": [
+    "storage",
     "cookies",
     "declarativeNetRequestWithHostAccess"
   ],
@@ -63,6 +64,16 @@
         "id": "ruleset_1",
         "enabled": true,
         "path": "rules.json"
+      },
+      {
+        "id": "new_reddit",
+        "enabled": false,
+        "path": "new-rules.json"
+      },
+      {
+        "id": "common",
+        "enabled": true,
+        "path": "common-rules.json"
       }
     ]
   }

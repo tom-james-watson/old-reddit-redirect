@@ -1,0 +1,20 @@
+[
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "www.reddit.com"
+        }
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:(?:old|new|np|m|amp|i|sh)\\.)?reddit\\.com/",
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  }
+]
